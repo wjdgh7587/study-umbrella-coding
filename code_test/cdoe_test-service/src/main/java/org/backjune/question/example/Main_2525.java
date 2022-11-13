@@ -1,4 +1,4 @@
-package org.example;
+package org.backjune.question.example;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

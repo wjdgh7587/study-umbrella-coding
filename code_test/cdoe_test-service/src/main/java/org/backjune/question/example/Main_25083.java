@@ -1,4 +1,4 @@
-package org.example;
+package org.backjune.question.example;
 
 public class Main_25083 {
     public static void main(String[] args) {

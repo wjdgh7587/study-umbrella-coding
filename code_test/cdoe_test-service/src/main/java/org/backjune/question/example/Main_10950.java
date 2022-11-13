@@ -1,4 +1,4 @@
-package org.example;
+package org.backjune.question.example;
 
 import java.util.ArrayList;
 import java.util.List;
