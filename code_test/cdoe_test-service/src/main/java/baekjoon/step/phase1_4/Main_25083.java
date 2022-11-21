@@ -1,4 +1,4 @@
-package org.backjune.question.example;
+package baekjoon.step.phase1_4;
 
 public class Main_25083 {
     public static void main(String[] args) {

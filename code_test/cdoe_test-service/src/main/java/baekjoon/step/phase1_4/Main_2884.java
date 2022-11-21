@@ -1,4 +1,4 @@
-package org.backjune.question.example;
+package baekjoon.step.phase1_4;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
