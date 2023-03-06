@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mytemplate-test</artifactId>
+        <groupId>com.my.test</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>${project.main.name}-boot</artifactId>
+    <groupId>${project.main.package}</groupId>
+    <version>${project.boot.version}</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <artifactId>${project.main.name}-service</artifactId>
+            <groupId>${project.main.package}</groupId>
+            <version>${project.service.version}</version>
+        </dependency>
+    </dependencies>
+
+
+    <!--프로파일 옵션    -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>op</id>
+            <properties>
+                <env>op</env>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>profile/**/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/profile/${env}</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+<!--                    <classifier>spring-boot</classifier>-->
+                    <mainClass>com.my.test.MyTemplateBootApp</mainClass>
+                    <!-- springdoc-openapi-->
+                    <jvmArguments>-Dspring.application.admin.enabled=true</jvmArguments>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+</project>
