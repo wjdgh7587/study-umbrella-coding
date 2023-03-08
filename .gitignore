@@ -30,7 +30,9 @@ hs_err_pid*
 
 # gradle
 .gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+/gradle/
+HELP.md
+
+# Kotlin
+# Compiled class file
+#*.class
