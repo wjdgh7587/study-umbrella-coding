@@ -1,0 +1,6 @@
+rootProject.name = 'gradle'
+include 'mytemplate-gradle-boot'
+include 'mytemplate-gradle-service'
+include 'mytemplate-gradle-domain'
+include 'mytemplate-gradle-store'
+
