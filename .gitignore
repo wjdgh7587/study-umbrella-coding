@@ -31,7 +31,14 @@ hs_err_pid*
 # gradle
 .gradle
 /gradle/
-HELP.md
+# Cache of project
+.gradletasknamecache
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # Kotlin
 # Compiled class file
