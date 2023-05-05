@@ -52,6 +52,8 @@ subprojects{
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
         testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        // Gson
+        implementation 'com.google.code.gson:gson:2.9.0'
     }
 
     tasks.named('test') {
