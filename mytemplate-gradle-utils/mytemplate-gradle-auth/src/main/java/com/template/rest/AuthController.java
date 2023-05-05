@@ -25,7 +25,7 @@ public class AuthController {
         String[] tokenArray = token.split("\\.");
 
         log.info("Header : {}", new String(Base64.getDecoder().decode(tokenArray[0])));
-        log.info("Body   : {}", new String(Base ㅈㅈㅈ64.getDecoder().decode(tokenArray[1])));
+        log.info("Body   : {}", new String(Base64.getDecoder().decode(tokenArray[1])));
     }
 
     /**
