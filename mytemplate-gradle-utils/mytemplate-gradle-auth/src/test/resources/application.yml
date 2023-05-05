@@ -1,0 +1,9 @@
+#jwt options
+jwt-test:
+  jwt:
+    auth:
+      name: x-auth-token
+    access:
+      name: x-access-token
+    refresh:
+      name: x-refresh-token

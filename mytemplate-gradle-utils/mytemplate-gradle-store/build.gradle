@@ -1,5 +1,5 @@
 dependencies {
     api project(':mytemplate-gradle-domain')
-    implementation "org.mybatis:mybatis:${mybatisVersion}"
-    implementation "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+    implementation("org.mybatis:mybatis:${mybatisVersion}")
+    implementation("mysql:mysql-connector-java:${mysqlConnectorVersion}")
 }

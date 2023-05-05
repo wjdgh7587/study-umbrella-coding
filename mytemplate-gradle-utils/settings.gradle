@@ -1,3 +1,10 @@
+//pluginManagement {
+//    repositories {
+//        mavenCentral()
+//        gradlePluginPortal()
+//    }
+//}
+
 rootProject.name = 'gradle'
 include 'mytemplate-gradle-boot'
 include 'mytemplate-gradle-service'
