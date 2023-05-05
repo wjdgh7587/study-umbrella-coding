@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+ext{
+    springBootVersion = "3.0.6"
+    mybatisVersion = "3.5.13"
+    mysqlConnectorVersion = "8.0.33"
+    lombokVersion = "1.18.26"
+}
+
+allprojects{
+    group = 'com.template'
+    version = '0.0.1-SNAPSHOT'
+
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    tasks.withType(JavaCompile){
+        options.encoding = 'UTF-8'
+    }
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation platform('org.springframework.boot:spring-boot-dependencies:1.5.8.RELEASE')
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+}
+
+
+

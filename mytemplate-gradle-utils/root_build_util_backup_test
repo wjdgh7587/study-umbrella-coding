@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	// root project임으로 spring 관련 플러그인 적용 제외
+	id 'org.springframework.boot' version '3.0.6-SNAPSHOT' apply false
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.gradle'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+// 하위 모듈들에 대한 백그라운드 환경 구성
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+
+	sourceCompatibility = JavaVersion.VERSION_17
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+}
+
+project(':public-template-boot') {
+	apply plugin: 'org.springframework.boot'
+
+	dependencies {
+//		implementation project(':template-service')
+		implementation project(':public-template-domain')
+	}
+}
+
+project(':public-template-domain') {
+
+}
+
+//repositories {
+//	mavenCentral()
+//	maven { url 'https://repo.spring.io/milestone' }
+//	maven { url 'https://repo.spring.io/snapshot' }
+//}
+
+//dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//}
