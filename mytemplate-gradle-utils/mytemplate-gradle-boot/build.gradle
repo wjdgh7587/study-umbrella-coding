@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api project(':mytemplate-gradle-service')
     api project(':mytemplate-gradle-auth')
+    api project(':mytemplate-gradle-login')
 }
 
 

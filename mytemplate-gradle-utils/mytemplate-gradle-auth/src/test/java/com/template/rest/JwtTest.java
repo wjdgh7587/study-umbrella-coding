@@ -77,4 +77,13 @@ public class JwtTest {
         printToken(token);
         log.info("\n");
     }
+
+    @DisplayName("1-1. jjwt Auth Token Generator")
+    @Test
+    void jswTest_1_1(){
+
+        log.info("-- jjwt token generator Test -- ");
+
+
+    }
 }
