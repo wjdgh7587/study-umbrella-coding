@@ -22,9 +22,12 @@ allprojects{
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    tasks.withType(JavaCompile){
-        options.encoding = 'UTF-8'
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            options.encoding = 'UTF-8'
+        }
     }
+
 }
 
 subprojects{
@@ -53,7 +56,10 @@ subprojects{
         testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
         testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
         // Gson
-        implementation 'com.google.code.gson:gson:2.9.0'
+        implementation("com.google.code.gson:gson:2.9.0")
+        // https://mvnrepository.com/artifact/com.google.guava/guava
+        implementation("com.google.guava:guava:31.1-jre")
+
     }
 
     tasks.named('test') {
@@ -61,6 +67,7 @@ subprojects{
     }
 
 }
+
 
 
 

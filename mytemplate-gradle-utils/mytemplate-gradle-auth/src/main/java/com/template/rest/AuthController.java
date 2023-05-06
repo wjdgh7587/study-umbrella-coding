@@ -1,12 +1,14 @@
 package com.template.rest;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.JsonObject;
+import com.template.entity.enums.ResultResCode;
+import com.template.entity.results.ResultMessage;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +32,11 @@ public class AuthController {
 
     /**
      * Auth token generator JwtTokenTest_1
+     *
      * @return
      */
     @PostMapping("/jwt1")
-    public JsonObject JwtTokenTest_1(){
+    public ResponseEntity<ResultMessage<String>> JwtTokenTest_1(){
 
         // Random Key
         String base64EncodedKey = "423F4528482B4D6251655468576D5A7134743777397A24432646294A404E6352";
@@ -55,6 +58,12 @@ public class AuthController {
         json.addProperty("name", name);
         json.addProperty("access_token", token);
 
-        return json;
+        ResultMessage<String> msg = new ResultMessage<>();
+
+        msg.setPayload("Test");
+        msg.setResultCode(ResultResCode.LOGIN_200_0.getResultCode());
+        msg.setResultMessage(ResultResCode.LOGIN_200_0.getResultMsgKo());
+
+        return ResponseEntity.status(HttpStatus.OK).body(msg);
     }
 }
