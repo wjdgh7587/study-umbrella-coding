@@ -5,6 +5,9 @@ plugins {
 
 ext{
     springBootVersion = "3.0.6"
+    springBootDependenciesVersion = "3.0.4"
+    springBootStarterWebVersion = "3.0.4"
+    springBootStarterTestVersion = "3.0.4"
     mybatisVersion = "3.5.13"
     mysqlConnectorVersion = "8.0.33"
     lombokVersion = "1.18.26"
@@ -20,8 +23,11 @@ allprojects{
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    tasks.withType(JavaCompile){
-        options.encoding = 'UTF-8'
+    tasks.withType(JavaCompile).tap {
+        configureEach{
+            options.encoding="UTF-8"
+        }
+        //tap command add with options.encoding = 'UTF-8'
     }
 }
 
@@ -42,10 +48,14 @@ subprojects{
     }
 
     dependencies {
-        compileOnly "org.projectlombok:lombok:${lombokVersion}"
-        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation platform('org.springframework.boot:spring-boot-dependencies:1.5.8.RELEASE')
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        // Test implementation
+        testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootStarterTestVersion}")
+        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-web:${springBootStarterWebVersion}")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootDependenciesVersion}")
     }
 
     tasks.named('test') {
