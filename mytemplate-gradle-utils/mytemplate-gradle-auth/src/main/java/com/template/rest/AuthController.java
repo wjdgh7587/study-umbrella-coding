@@ -60,7 +60,7 @@ public class AuthController {
 
         ResultMessage<String> msg = new ResultMessage<>();
 
-        msg.setPayload("Test");
+        msg.setPayload(json.toString());
         msg.setResultCode(ResultResCode.LOGIN_200_0.getResultCode());
         msg.setResultMessage(ResultResCode.LOGIN_200_0.getResultMsgKo());
 

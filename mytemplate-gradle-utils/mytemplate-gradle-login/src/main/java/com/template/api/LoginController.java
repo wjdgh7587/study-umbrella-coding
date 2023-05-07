@@ -1,6 +1,7 @@
 package com.template.api;
 
 import com.template.entity.enums.ResultResCode;
+import com.template.entity.results.LoginResult;
 import com.template.entity.results.ResultMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class LoginController {
 
+    private String loginValidation(){
+
+        return null;
+    }
+
     @PostMapping("/api/login")
-    public ResponseEntity<ResultMessage<String>> login(
+    public ResponseEntity<ResultMessage<LoginResult>> login(
         @RequestBody HttpServletRequest request, String test) throws Exception {
+
+
+        LoginResult loginResult = new LoginResult();
 
         // RSA 패스워드 복호화
         String decryptPassword = "";
 
+        // Test Code
+//        loginResult.setLoginResult(r);
 
-        ResultMessage<String> msg = new ResultMessage<>();
+        // Login History
 
-        msg.setPayload("Test");
+
+        ResultMessage<LoginResult> msg = new ResultMessage<>();
+
+        msg.setPayload(loginResult);
         msg.setResultCode(ResultResCode.LOGIN_200_0.getResultCode());
         msg.setResultMessage(ResultResCode.LOGIN_200_0.getResultMsgKo());
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,19 +46,25 @@ public enum ResultResCode {
     , LOGIN_500_7("500_7", "내부 서버 에러", "Internal Server Error")
     ;
 
-
-    private static final Map<String, ResultResCode> lookup = Maps.uniqueIndex(
-            List.of(ResultResCode.values()) ,
-            ResultResCode::getResultCode
-    );
-
-
     @Getter
     private final String resultCode;
     @Getter
     private final String resultMsgKo;
     @Getter
     private final String resultMsgEn;
+
+    //    private static final Map<String, ResultResCode> lookup = Maps.uniqueIndex(
+//            List.of(ResultResCode.values()) ,
+//            ResultResCode::getResultCode
+//    );
+
+    // Without Google Guava Library
+    private static final Map<String, ResultResCode> lookup = new HashMap<>();
+    static {
+        for (ResultResCode code : ResultResCode.values()) {
+            lookup.put(code.getResultCode(), code);
+        }
+    }
 
     public static ResultResCode get(String resultCode){
         return lookup.get(resultCode);

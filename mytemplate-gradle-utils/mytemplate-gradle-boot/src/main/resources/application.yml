@@ -2,6 +2,8 @@ server:
   port: 8091
 
 
+
+
 # JWT Option
 jwt:
   auth:
@@ -10,3 +12,5 @@ jwt:
     name: X-ACCESS-TOKEN
   refresh:
     name: X-REFRESH-TOKEN
+
+
