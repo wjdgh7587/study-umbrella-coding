@@ -1,0 +1,6 @@
+rootProject.name = 'code-test'
+
+include 'mytemplate-gradle-domain'
+include 'template-code-test-backjoon'
+include 'template-code-test-book'
+

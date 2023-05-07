@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+//    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+ext{
+
+}
+
+allprojects{
+    group = 'com.template'
+    version = '0.0.1-SNAPSHOT'
+
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    tasks.withType(JavaCompile).tap {
+        configureEach{
+            options.encoding="UTF-8"
+        }
+        //tap command add with options.encoding = 'UTF-8'
+    }
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+//    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+//        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+//        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        // Test implementation
+//        testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootStarterTestVersion}")
+//        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+//        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+//        implementation("org.springframework.boot:spring-boot-starter-web:${springBootStarterWebVersion}")
+//        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootDependenciesVersion}")
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+}
+
+
+
