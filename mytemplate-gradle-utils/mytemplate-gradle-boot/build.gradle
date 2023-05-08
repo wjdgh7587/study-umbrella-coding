@@ -7,6 +7,7 @@ dependencies {
     api project(':mytemplate-gradle-auth')
     api project(':mytemplate-gradle-login')
     api project(':mytemplate-gradle-exception')
+    api project(':mytemplate-gradle-swagger')
 }
 
 

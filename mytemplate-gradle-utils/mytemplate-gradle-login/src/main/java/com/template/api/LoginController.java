@@ -36,6 +36,7 @@ public class LoginController {
 //        loginResult.setLoginResult(r);
 
         // Login History
+        loginResult.setTokens(null);
 
 
         ResultMessage<LoginResult> msg = new ResultMessage<>();
