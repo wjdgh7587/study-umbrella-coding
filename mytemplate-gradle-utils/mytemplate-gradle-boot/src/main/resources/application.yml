@@ -6,6 +6,39 @@ project:
     code: TEST
     name: TEST project
 
+# Swagger
+swagger:
+  path: /api/gradle-utils/v${swagger.api.ver}/**
+  api:
+    title: Gradle-template
+    desc: <br>[See ErrorCode Specification]
+    ver: 1.0
+  contact:
+    name: Jeongho Yun
+    url: ''
+    email: wjdgh7587@gmail.com
+  license:
+    name:
+    url:
+  doc:
+    desc: Spring Gradle Multi Module Utils
+    path: /index.html
+
+# springdoc
+springdoc:
+  api-docs:
+#    enabled: true
+    path: /api/swagger/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-operation-id: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+    supported-submit-methods: application/json
+
 
 # JWT Option
 jwt:

@@ -1,4 +1,4 @@
-rootProject.name = 'gradle'
+rootProject.name = 'gradle-swagger'
 include 'mytemplate-gradle-boot'
 include 'mytemplate-gradle-service'
 include 'mytemplate-gradle-domain'
