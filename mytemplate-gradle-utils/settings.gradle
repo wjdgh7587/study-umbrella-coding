@@ -12,4 +12,5 @@ include 'mytemplate-gradle-domain'
 include 'mytemplate-gradle-store'
 include 'mytemplate-gradle-auth'
 include 'mytemplate-gradle-login'
+include 'mytemplate-gradle-exception'
 

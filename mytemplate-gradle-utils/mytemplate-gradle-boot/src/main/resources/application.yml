@@ -1,7 +1,10 @@
 server:
   port: 8091
 
-
+project:
+  service:
+    code: TEST
+    name: TEST project
 
 
 # JWT Option
