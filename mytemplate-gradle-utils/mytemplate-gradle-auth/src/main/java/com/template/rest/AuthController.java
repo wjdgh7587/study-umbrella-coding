@@ -6,6 +6,7 @@ import com.template.entity.results.ResultMessage;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,7 @@ public class AuthController {
                                 Map.of("name",name,"role",testRole)
                         ).signWith(key)
                         .compact();
+
         printToken(token);
 
         JsonObject json = new JsonObject();
@@ -61,8 +63,8 @@ public class AuthController {
         ResultMessage<String> msg = new ResultMessage<>();
 
         msg.setPayload(json.toString());
-        msg.setResultCode(ResultResCode.LOGIN_200_0.getResultCode());
-        msg.setResultMessage(ResultResCode.LOGIN_200_0.getResultMsgKo());
+        msg.setResultCode(ResultResCode.US_200_0.getResultCode());
+        msg.setResultMessage(ResultResCode.US_200_0.getResultMsgKo());
 
         return ResponseEntity.status(HttpStatus.OK).body(msg);
     }

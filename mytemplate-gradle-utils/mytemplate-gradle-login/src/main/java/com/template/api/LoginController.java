@@ -41,8 +41,8 @@ public class LoginController {
         ResultMessage<LoginResult> msg = new ResultMessage<>();
 
         msg.setPayload(loginResult);
-        msg.setResultCode(ResultResCode.LOGIN_200_0.getResultCode());
-        msg.setResultMessage(ResultResCode.LOGIN_200_0.getResultMsgKo());
+        msg.setResultCode(ResultResCode.US_200_0.getResultCode());
+        msg.setResultMessage(ResultResCode.US_200_0.getResultMsgKo());
 
         return ResponseEntity.status(HttpStatus.OK).body(msg);
     }

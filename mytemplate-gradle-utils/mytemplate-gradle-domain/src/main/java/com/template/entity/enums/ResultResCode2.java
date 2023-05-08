@@ -1,15 +1,13 @@
 package com.template.entity.enums;
 
-import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-public enum ResultResCode {
+public enum ResultResCode2 {
 
     // 200 All Success Things is going to process with this
     US_200_0("200_0","로그인 성공", "Operation Success")
@@ -59,14 +57,14 @@ public enum ResultResCode {
 //    );
 
     // Without Google Guava Library
-    private static final Map<String, ResultResCode> lookup = new HashMap<>();
+    private static final Map<String, ResultResCode2> lookup = new HashMap<>();
     static {
-        for (ResultResCode code : ResultResCode.values()) {
+        for (ResultResCode2 code : ResultResCode2.values()) {
             lookup.put(code.getResultCode(), code);
         }
     }
 
-    public static ResultResCode get(String resultCode){
+    public static ResultResCode2 get(String resultCode){
         return lookup.get(resultCode);
     }
 }
