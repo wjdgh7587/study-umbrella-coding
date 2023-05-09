@@ -8,24 +8,25 @@ project:
 
 # Swagger
 swagger:
-  path: /api/gradle-utils/v${swagger.api.ver}/**
+  path: /api/gradle-utils/v${swagger.api.version}/**
   api:
     title: Gradle-template
-    desc: <br>[See ErrorCode Specification]
-    ver: 1.0
+    desc: Gradle Template Description
+    version: 1.0
   contact:
     name: Jeongho Yun
-    url: ''
+    url: Swagger.co.kr
     email: wjdgh7587@gmail.com
   license:
-    name:
-    url:
-  doc:
+    name: Jeongho Yun
+    url: wjdgh7587@gmail.com
+  external:
     desc: Spring Gradle Multi Module Utils
     path: /index.html
 
 # springdoc
 springdoc:
+  version: 1.0.0
   api-docs:
 #    enabled: true
     path: /api/swagger/api-docs
