@@ -6,6 +6,7 @@ import com.template.entity.results.ResultMessage;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@Tag(name = "Spring ")
 public class AuthController {
 
     private void printToken(String token){
