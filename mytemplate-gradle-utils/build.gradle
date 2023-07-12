@@ -28,6 +28,19 @@ allprojects{
         }
     }
 
+    tasks.register("cleanLogs", Delete){
+        delete 'logs'
+        // 보통 build 는 clean 시 역시 삭제됨으로 따로 설정하지 않음
+    }
+
+    clean.dependsOn 'cleanLogs'
+
+//    processResources{
+//        filesMatching('**/application.yml'){
+//            expand(project.properties)
+//        }
+//    }
+
 }
 
 subprojects{
@@ -69,7 +82,6 @@ subprojects{
     }
 
 }
-
 
 
 
