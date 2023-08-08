@@ -1,4 +1,4 @@
-package com.jeongho.template.rest;
+package com.jeongho.template.controller;
 
 import com.jeongho.template.entity.SwaggerTestModelB;
 import lombok.extern.slf4j.Slf4j;
