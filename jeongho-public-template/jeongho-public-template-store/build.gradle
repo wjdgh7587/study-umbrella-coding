@@ -1,0 +1,13 @@
+dependencies {
+    api project(":jeongho-public-template-domain")
+    // mybatis
+//    implementation("org.mybatis:mybatis-spring-boot-starter:${mybatisSpringVersion}")
+//    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1")
+//
+//    // my-sql connector
+//    implementation("mysql:mysql-connector-java:${mysqlConnectorVersion}")
+//    // mariadb
+//    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+//    // jdbc
+//    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+}

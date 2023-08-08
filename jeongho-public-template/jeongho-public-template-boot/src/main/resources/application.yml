@@ -1,0 +1,20 @@
+# Server Info
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: true
+
+# package
+package: com.jeongho.template
+
+# Swagger
+
+# Spring security
+security:
+  auth_request: "/test/**"
+  auth_api_docs: ""
+  auth_swagger: "/swagger-ui/**"
+

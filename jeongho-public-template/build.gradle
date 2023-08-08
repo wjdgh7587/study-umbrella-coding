@@ -1,0 +1,95 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+ext{
+    springBootVersion = "3.0.6"
+    springBootDependenciesVersion = "3.0.4"
+    springBootStarterWebVersion = "3.0.4"
+    springBootStarterTestVersion = "3.0.4"
+    mybatisSpringVersion = "3.0.1"
+    mysqlConnectorVersion = "8.0.33"
+    lombokVersion = "1.18.26"
+}
+
+allprojects{
+    group = 'com.jeongho.template'
+    version = '0.0.1-SNAPSHOT'
+
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    tasks.withType(JavaCompile).tap {
+        configureEach{
+            options.encoding="UTF-8"
+        }
+    }
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        // lombok
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        // For Testing implementation
+        testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootStarterTestVersion}")
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-web:${springBootStarterWebVersion}")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootDependenciesVersion}")
+        // spring-web
+        implementation("org.springframework:spring-web:6.0.8")
+        // spring-boot-starter
+        implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+        // Swagger
+        implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+        // log4j
+        implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
+        // lucy xss-servlet XSS(Cross Site Scripting) Defender
+//        implementation("com.navercorp.lucy:lucy-xss-servlet:2.0.1")
+
+        // spring security
+        implementation("org.springframework.boot:spring-boot-starter-security")
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+}
+
+tasks.register("cleanLogs", Delete){
+    delete 'logs'
+    // delete 'build'
+}
+
+clean.dependsOn "cleanLogs"
+
+
+
+/***
+ * root build.gradle 작성 요령
+ *
+ * - 일반적인 maven central() 기준으로 안내되는 의존성 추가에는 implementation '' 위와 같은 형식으로 되어있습니다.
+ * - 하지만 우리가 주로 사용하는 intellij 에서 안내되는 문법은 implementation("") 같은 코틀린 형식으로 안내됩니다.
+ * - 위 두가지 중 어떠한 방법으로 작성해도 무관합니다.
+ */

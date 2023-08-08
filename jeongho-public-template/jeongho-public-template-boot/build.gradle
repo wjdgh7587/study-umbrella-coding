@@ -1,0 +1,10 @@
+plugins {
+    // spring boot
+    id 'org.springframework.boot' version "${springBootVersion}"
+    // deploy
+    id 'maven-publish'
+}
+
+dependencies {
+    api project(':jeongho-public-template-service')
+}
