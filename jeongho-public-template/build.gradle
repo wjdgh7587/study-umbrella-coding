@@ -65,10 +65,13 @@ subprojects{
         // log4j
         implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
         // lucy xss-servlet XSS(Cross Site Scripting) Defender
+        // 내 고유 라이브러리 가져다가 사용하기
 //        implementation("com.navercorp.lucy:lucy-xss-servlet:2.0.1")
 
         // spring security
         implementation("org.springframework.boot:spring-boot-starter-security")
+        // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        implementation("com.google.code.gson:gson:2.10.1")
     }
 
     tasks.named('test') {

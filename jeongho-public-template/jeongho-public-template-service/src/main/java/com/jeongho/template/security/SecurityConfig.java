@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -45,22 +46,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.cors().disable().csrf().disable()
+        http.httpBasic().disable()// rest 기본 설정 사용 X
+                .cors().and()
+                .csrf().disable() // rest csrf 보안 필요 X
                 .authorizeHttpRequests()
-                .requestMatchers(new AntPathRequestMatcher("/test/**"))
+                .requestMatchers(new AntPathRequestMatcher("/**"))
                 .permitAll()
                 .and()
-                .exceptionHandling(
-                        except -> except.accessDeniedHandler(accessDeniedHandler())
-                )
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
         ;
 
-//        http.cors().disable().csrf().disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers(new AntPathRequestMatcher(authRequest))
-//                .permitAll()
-//                .anyRequest().authenticated()
-//                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        http.authorizeHttpRequests().requestMatchers(HttpMethod.OPTIONS).permitAll();
+
         return http.build();
     }
 
@@ -76,30 +73,7 @@ public class SecurityConfig {
 //        accessDeniedHandler.setErrorPage("/page");
 
         return new CustomAccessDeniedHandler();
+//        return accessDeniedHandler();
     }
 
-}
-
-class CustomAccessDeniedHandler implements AccessDeniedHandler {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-        //"application/json"
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-        Map<String, Object> resultResponseMap = new HashMap<>();
-        resultResponseMap.put("status", HttpStatus.FORBIDDEN.value());
-        resultResponseMap.put("message", "Access denied");
-        resultResponseMap.put("result", false);
-
-        OutputStream os = response.getOutputStream();
-        objectMapper.writeValue(response.getWriter(), resultResponseMap);
-        os.flush();
-
-
-    }
 }

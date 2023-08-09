@@ -25,7 +25,7 @@ public class SwaggerTestController {
     @PostMapping("/test/swaggerA")
     public Map<String, Object> testSwaggerA(String testParamA, Integer testParamB){
 
-        log.info("This is Swagger Test!!");
+        log.info("This is Swagger TestA!!");
         log.info("Checking Parma A : P{} ", testParamA);
         log.info("Checking Parma B : P{} ", testParamB);
 
@@ -40,9 +40,9 @@ public class SwaggerTestController {
     @PostMapping("/test/swaggerB")
     public SwaggerTestModelB testSwaggerB(SwaggerTestModelB param){
 
-        log.info("This is Swagger Test!!");
-        log.info("Checking Parma A : P{} ", param.getTestA());
-        log.info("Checking Parma B : P{} ", param.getTestB());
+        log.info("This is Swagger TestB!!");
+        log.info("Checking Parma A : {} ", param.getTestA());
+        log.info("Checking Parma B : {} ", param.getTestB());
 
         Map<String, Object> resultMap = new HashMap<>();
 
