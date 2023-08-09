@@ -15,6 +15,7 @@ package: com.jeongho.template
 # Spring security
 security:
   auth_request: "/test/**"
-  auth_api_docs: ""
+  auth_api_docs: "/v3/**"
   auth_swagger: "/swagger-ui/**"
+
 

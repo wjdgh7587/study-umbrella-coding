@@ -43,14 +43,25 @@ public class SecurityConfig {
     @Value("${security.auth_swagger}")
     private String swaggerRequest;
 
+    @Value("${security.auth_api_docs}")
+    private String authApiDocs;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.httpBasic().disable()// rest 기본 설정 사용 X
+        /**
+         * 기본적으로 Rest ->
+         * httpBasic() disable()
+         * , csrf() disable() 처리함
+         * , swagger 한정 허용
+         */
+
+        http.httpBasic().disable()
                 .cors().and()
-                .csrf().disable() // rest csrf 보안 필요 X
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(new AntPathRequestMatcher("/**"))
+                .requestMatchers(new AntPathRequestMatcher(swaggerRequest)
+                        , new AntPathRequestMatcher(authApiDocs))
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
