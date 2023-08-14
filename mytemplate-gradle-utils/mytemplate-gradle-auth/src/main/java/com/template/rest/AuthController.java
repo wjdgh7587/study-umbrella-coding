@@ -39,7 +39,7 @@ public class AuthController {
      * @return
      */
     @PostMapping("/jwt1")
-    public ResponseEntity<ResultMessage<String>> JwtTokenTest_1(){
+    public ResponseEntity<ResultMessage<String>> JwtTokenTest_1() {
 
         // Random Key
         String base64EncodedKey = "423F4528482B4D6251655468576D5A7134743777397A24432646294A404E6352";
@@ -51,7 +51,7 @@ public class AuthController {
 
         String token =
                 Jwts.builder().addClaims(
-                                Map.of("name",name,"role",testRole)
+                                Map.of("name", name, "role", testRole)
                         ).signWith(key)
                         .compact();
 
