@@ -1,0 +1,7 @@
+dependencies {
+    api project(':mytemplate-gradle-store')
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+}
