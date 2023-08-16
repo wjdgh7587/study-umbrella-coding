@@ -9,4 +9,24 @@ public class NotFoundException extends AbstractBaseException{
     public HttpStatus getHttpStatus() {
         return HttpStatus.NOT_FOUND;
     }
+
+    @Getter
+    private String code;
+
+    public NotFoundException(){
+        super();
+    }
+
+    public NotFoundException(Throwable throwable){
+        super(throwable);
+    }
+
+    public NotFoundException(String message, Throwable throwable){
+        super(message, throwable);
+    }
+
+    public NotFoundException(String message, Object... args){
+        super(String.format(message, args));
+    }
+
 }
