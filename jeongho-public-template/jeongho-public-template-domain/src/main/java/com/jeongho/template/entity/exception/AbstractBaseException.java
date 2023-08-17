@@ -1,6 +1,5 @@
 package com.jeongho.template.entity.exception;
 
-import com.jeongho.template.entity.enums.BaseResultResCode;
 import org.springframework.http.HttpStatus;
 
 public abstract class AbstractBaseException extends RuntimeException {

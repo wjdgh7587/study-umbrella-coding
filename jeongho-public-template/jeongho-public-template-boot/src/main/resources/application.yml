@@ -7,6 +7,14 @@ server:
     whitelabel:
       enabled: true
 
+# Spring
+spring:
+  application:
+    name: jeongho-template
+  messages:
+    basename: messages/response-messages
+    encoding: UTF-8
+
 # package
 package: com.jeongho.template
 
