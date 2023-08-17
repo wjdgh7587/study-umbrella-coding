@@ -20,6 +20,7 @@
 
 package com.jeongho.template.entity.enums;
 
+import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -32,38 +33,44 @@ import java.util.stream.Collectors;
 public enum BaseResultErrorCode {
 
   /* 400 BadRequest */
+  // 필수 파라미터
   MANDATORY_PARAM_ERROR(),
+  // 유효하지 않는 파라미터
   INVALID_PARAM_ERROR(),
-  BAD_FORMAT_ERROR(),
+  // 잘못된 요청 파라미터 존재
+  BAD_REQUEST_PARAM_ERROR(),
+  // 잘못된 요청
   BAD_REQUEST_ERROR(),
+  //
+  OPERATION_ERROR(),
 
   /* 401 Unauthenticated (인증) */
-  LOGIN_REQUIRED(),
-  AUTHCODE_CHECK_REQUIRED(),
-  EXPIRED_AUTHCODE(),
-  ALREADY_AUTHENTICATED_ERROR(),
-  AUTHENTICATION_FAILED_ERROR(),
-
-  /* 403 Forbidden(Unauthorized) (토큰관련)  */
-  EXPIRED_TOKEN_ERROR(),
-  INVALID_TOKEN_ERROR(),
-  FORBIDDEN_TO_ERROR(),
-  FORBIDDEN_ERROR(),
-
-  /* 404 Not Found */
-  RESOURCE_NOT_FOUND(),
-
-  /* 500 Internal Server Error */
-  QUERY_FAILED(),
-  REGISTRATION_FAILED(),
-  GENERATION_FAILED(),
-  MODIFICATION_FAILED(),
-  REMOVAL_FAILED(),
-  DUPLICATED_ERROR(),
-  ENTITY_NOT_FOUND(),
-  INVALID_ENTITY_ERROR(),
-  EXTERNAL_SERVER_ERROR(),
-  INTERNAL_SERVER_ERROR()
+//  LOGIN_REQUIRED(),
+//  AUTHCODE_CHECK_REQUIRED(),
+//  EXPIRED_AUTHCODE(),
+//  ALREADY_AUTHENTICATED_ERROR(),
+//  AUTHENTICATION_FAILED_ERROR(),
+//
+//  /* 403 Forbidden(Unauthorized) (토큰관련)  */
+//  EXPIRED_TOKEN_ERROR(),
+//  INVALID_TOKEN_ERROR(),
+//  FORBIDDEN_TO_ERROR(),
+//  FORBIDDEN_ERROR(),
+//
+//  /* 404 Not Found */
+//  RESOURCE_NOT_FOUND(),
+//
+//  /* 500 Internal Server Error */
+//  QUERY_FAILED(),
+//  REGISTRATION_FAILED(),
+//  GENERATION_FAILED(),
+//  MODIFICATION_FAILED(),
+//  REMOVAL_FAILED(),
+//  DUPLICATED_ERROR(),
+//  ENTITY_NOT_FOUND(),
+//  INVALID_ENTITY_ERROR(),
+//  EXTERNAL_SERVER_ERROR(),
+//  INTERNAL_SERVER_ERROR()
   ;
 
 //  /* 400 Bad Request */

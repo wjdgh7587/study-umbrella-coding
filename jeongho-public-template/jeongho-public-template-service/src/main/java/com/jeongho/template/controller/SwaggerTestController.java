@@ -5,8 +5,13 @@ import com.jeongho.template.entity.enums.BaseResultResCode;
 import com.jeongho.template.entity.exception.InvalidRequestException;
 import com.jeongho.template.entity.exception.NotFoundException;
 import com.jeongho.template.entity.form.ExceptionMessage;
+import com.jeongho.template.entity.form.ResultMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -42,7 +47,7 @@ public class SwaggerTestController {
     }
 
     @PostMapping("/test/swaggerB")
-    public SwaggerTestModelB testSwaggerB(SwaggerTestModelB param){
+    public ResultMessage testSwaggerB(@RequestBody SwaggerTestModelB param){
 
         log.info("This is Swagger TestB!!");
         log.info("This is Swagger TestB!!");
@@ -50,13 +55,23 @@ public class SwaggerTestController {
         log.info("Checking Parma B : {} ", param.getTestB());
 
         Map<String, Object> resultMap = new HashMap<>();
+        ResultMessage resultMessage = new ResultMessage();
 
+        // InvalidRequestException
         if(!param.getTestA().equals(param.getTestB())){
-            throw new NotFoundException(BaseResultResCode.RS_4001.getCode(),
-                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_4001.getName(), "FILE NAME"));
+            throw new InvalidRequestException(BaseResultResCode.RS_4003.getCode(),
+                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_4003.getName(), "FILE NAME"));
         }
 
-        return param;
+        else{
+            resultMessage.setCode(BaseResultResCode.RS_2001.getCode());
+            resultMessage.setCodeDetail(BaseResultResCode.RS_2001.getKoMsg());
+            resultMessage.setMessage("안녕하세용!!");
+            resultMessage.setPayload(param);
+
+        }
+
+        return resultMessage;
     }
 
 }
