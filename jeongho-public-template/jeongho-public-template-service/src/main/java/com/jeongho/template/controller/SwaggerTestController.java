@@ -3,6 +3,7 @@ package com.jeongho.template.controller;
 import com.jeongho.template.entity.SwaggerTestModelB;
 import com.jeongho.template.entity.enums.BaseResultResCode;
 import com.jeongho.template.entity.exception.InvalidRequestException;
+import com.jeongho.template.entity.exception.NotFoundException;
 import com.jeongho.template.entity.form.ExceptionMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,14 +45,15 @@ public class SwaggerTestController {
     public SwaggerTestModelB testSwaggerB(SwaggerTestModelB param){
 
         log.info("This is Swagger TestB!!");
+        log.info("This is Swagger TestB!!");
         log.info("Checking Parma A : {} ", param.getTestA());
         log.info("Checking Parma B : {} ", param.getTestB());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         if(!param.getTestA().equals(param.getTestB())){
-            throw new InvalidRequestException(BaseResultResCode.RS_5002.getCode(),
-                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_5002.getName(),  "어떤 거가 이상해요"));
+            throw new NotFoundException(BaseResultResCode.RS_4001.getCode(),
+                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_4001.getName(), "FILE NAME"));
         }
 
         return param;

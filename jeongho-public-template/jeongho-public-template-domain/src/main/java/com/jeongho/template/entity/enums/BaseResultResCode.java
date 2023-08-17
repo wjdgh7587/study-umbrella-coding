@@ -20,9 +20,9 @@ public enum BaseResultResCode {
 
     // 400 Error
     , RS_4000("400", "요청 실패", "Operation Failed", "OPERATION_FAILED")
-    , RS_4001("400", "필수 파라미터 미입력", "Mandatory Parameter Error", "MANDATORY_PARAMETER_ERROR")
+    , RS_4001("400", "필수 파라미터 미입력", "Mandatory Parameter Error", "MANDATORY_PARAM_ERROR")
     , RS_4002("400", "지원하지 않는 타입", "Bad Format Error", "BAD_FORMAT_ERROR")
-    , RS_4003("400", "잘못된 요청", "Bad Request", "BAD_REQUEST")
+    , RS_4003("400", "잘못된 요청", "Bad Request", "BAD_REQUEST_ERROR")
 
 
     // 401 Error
@@ -44,7 +44,7 @@ public enum BaseResultResCode {
     // 500 Error
     , RS_5000("500", "로그인 실패", "Login Failed", "LOGIN_FAILED")
     , RS_5001("500", "외부 서버 에러", "External Server Error", "EXTERNAL_SERVER_ERROR")
-    , RS_5002("500", "내부 서버 에러", "Internal Server Error", "INTERVAL_SERVER_ERROR")
+    , RS_5002("500", "내부 서버 에러", "Internal Server Error", "INTERNAL_SERVER_ERROR")
 
     ;
 
