@@ -37,6 +37,9 @@ subprojects{
 
     repositories {
         mavenCentral()
+        flatDir {
+            dirs "libs"
+        }
     }
 
     configurations {
@@ -68,12 +71,17 @@ subprojects{
         // 내 고유 라이브러리 가져다가 사용하기
 //        implementation("com.navercorp.lucy:lucy-xss-servlet:2.0.1")
 
+        // https://mvnrepository.com/artifact/com.google.guava/guava
+        implementation("com.google.guava:guava:32.1.2-jre")
+
         // spring security
         implementation("org.springframework.boot:spring-boot-starter-security")
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation("com.google.code.gson:gson:2.10.1")
+        // include external lib
+//        implementation fileTree(dir: 'libs', includes: ['*.jar'])
+        implementation files('libs/lucy.jar')
     }
-
     tasks.named('test') {
         useJUnitPlatform()
     }

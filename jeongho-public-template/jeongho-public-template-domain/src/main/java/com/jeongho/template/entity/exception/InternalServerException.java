@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public class ExternalServerException extends AbstractBaseException{
+public class InternalServerException extends AbstractBaseException{
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -14,19 +14,19 @@ public class ExternalServerException extends AbstractBaseException{
     @Getter
     private String code;
 
-    public ExternalServerException(){
+    public InternalServerException(){
         super();
     }
 
-    public ExternalServerException(Throwable throwable){
+    public InternalServerException(Throwable throwable){
         super(throwable);
     }
 
-    public ExternalServerException(String message, Throwable throwable){
+    public InternalServerException(String message, Throwable throwable){
         super(message, throwable);
     }
 
-    public ExternalServerException(String message, Object... args){
+    public InternalServerException(String message, Object... args){
         super(String.format(message, args));
     }
 }

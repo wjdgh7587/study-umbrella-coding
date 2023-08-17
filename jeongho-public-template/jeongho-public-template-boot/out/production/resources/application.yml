@@ -1,0 +1,29 @@
+# Server Info
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: true
+
+# Spring
+spring:
+  application:
+    name: jeongho-template
+  messages:
+    basename: messages/response-messages
+    encoding: UTF-8
+
+# package
+package: com.jeongho.template
+
+# Swagger
+
+# Spring security
+security:
+  auth_request: "/test/**"
+  auth_api_docs: "/v3/**"
+  auth_swagger: "/swagger-ui/**"
+
+

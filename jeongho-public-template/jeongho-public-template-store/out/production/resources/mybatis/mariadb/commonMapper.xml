@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commonMapper">
+
+    <sql id="order_by_list">
+        <if test="orderMap != null">
+            <foreach collection="orderMap" item="orderby" open="order by" index="index" separator=",">
+                ${orderby.sort} ${orderby.dir}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        LIMIT #{offset}, #{limit}
+    </sql>
+
+</mapper>
