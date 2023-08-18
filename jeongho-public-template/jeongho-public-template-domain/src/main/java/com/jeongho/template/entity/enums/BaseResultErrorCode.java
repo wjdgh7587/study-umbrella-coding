@@ -24,10 +24,7 @@ import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public enum BaseResultErrorCode {
@@ -41,8 +38,13 @@ public enum BaseResultErrorCode {
   BAD_REQUEST_PARAM_ERROR(),
   // 잘못된 요청
   BAD_REQUEST_ERROR(),
-  //
+  // ??
   OPERATION_ERROR(),
+  // 사용자를 찾을 수 없음
+  USER_NOT_FOUND(),
+
+  /* INTERVAL_SERVER_ERROR */
+  INTERNAL_SERVER_ERROR()
 
   /* 401 Unauthenticated (인증) */
 //  LOGIN_REQUIRED(),

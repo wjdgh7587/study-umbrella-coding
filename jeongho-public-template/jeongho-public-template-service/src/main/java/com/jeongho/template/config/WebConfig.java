@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
      * 만약 spring boot 가 제공하는 web mvc 기본 설정 없이 모두 설정을 하려면
      * @EnableWebMvc 을 선언하면 되고
      * 기본 MVC 설정을 유지하면서 사용하려면 @Configuration + implements WebMvcConfigurer
-     * 을 같이 사용하면 된다.
+     * 을 같이 사용하면 됨
      *
      * @param registry
      */
