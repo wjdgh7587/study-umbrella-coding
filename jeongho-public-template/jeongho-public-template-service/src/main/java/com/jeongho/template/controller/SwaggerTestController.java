@@ -1,9 +1,12 @@
 package com.jeongho.template.controller;
 
 import com.jeongho.template.entity.SwaggerTestModelB;
+import com.jeongho.template.entity.enums.BaseResultErrorCode;
 import com.jeongho.template.entity.enums.BaseResultResCode;
+import com.jeongho.template.entity.exception.InternalServerException;
 import com.jeongho.template.entity.exception.InvalidRequestException;
 import com.jeongho.template.entity.exception.NotFoundException;
+import com.jeongho.template.entity.exception.OperationException;
 import com.jeongho.template.entity.form.ExceptionMessage;
 import com.jeongho.template.entity.form.ResultMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +24,7 @@ import java.util.Map;
 @Slf4j
 public class SwaggerTestController {
 
-    /**
-     * Swagger openapi-docs 사용시에는 다음과 같이 처리함
-     *
-     *
-     */
-
-    /**
+     /**
      * Spring Swagger api-docs test
      * @return
      */
@@ -58,17 +55,29 @@ public class SwaggerTestController {
         ResultMessage resultMessage = new ResultMessage();
 
         // InvalidRequestException
+//        if(!param.getTestA().equals(param.getTestB())){
+//            throw new InvalidRequestException(BaseResultResCode.RS_4003.getCode(),
+//                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_4003.getName(), "FILE NAME"));
+//        }
+
+        // InvalidRequestException USER_NOT_FOUND
+//        if(!param.getTestA().equals(param.getTestB())){
+//            throw new OperationException(BaseResultResCode.RS_4002.getCode(),
+//                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.USER_NOT_FOUND.name(), "윤정호"));
+//        }
+
+        // RequestException USER_NOT_FOUND
         if(!param.getTestA().equals(param.getTestB())){
-            throw new InvalidRequestException(BaseResultResCode.RS_4003.getCode(),
-                    ExceptionMessage.makeExceptionMessage(BaseResultResCode.RS_4003.getName(), "FILE NAME"));
+            throw new InternalServerException(BaseResultResCode.RS_5002.getCode(),
+                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.USER_NOT_FOUND.name(), "윤정호"));
         }
+
 
         else{
             resultMessage.setCode(BaseResultResCode.RS_2001.getCode());
             resultMessage.setCodeDetail(BaseResultResCode.RS_2001.getKoMsg());
             resultMessage.setMessage("안녕하세용!!");
             resultMessage.setPayload(param);
-
         }
 
         return resultMessage;

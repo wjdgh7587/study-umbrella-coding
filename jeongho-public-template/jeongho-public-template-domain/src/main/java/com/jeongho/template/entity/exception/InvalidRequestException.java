@@ -25,12 +25,9 @@ public class InvalidRequestException extends AbstractBaseException{
         super(e);
     }
 
-
-    public InvalidRequestException(String code, String message) {
+    public InvalidRequestException(String message) {
         super(message);
-        this.code = code;
     }
-
     public InvalidRequestException(String message, Throwable e){
         super(message, e);
     }

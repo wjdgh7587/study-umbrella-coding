@@ -5,10 +5,8 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.io.Serial;
-
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public class OperationException extends AbstractBaseException{
+public class UnknownException extends AbstractBaseException{
 
     @Override
     public HttpStatus getHttpStatus() {
@@ -18,23 +16,23 @@ public class OperationException extends AbstractBaseException{
     @Getter
     private String code;
 
-    public OperationException(){
+    public UnknownException(){
         super();
     }
 
-    public OperationException(String message){
+    public UnknownException(String message){
         super(message);
     }
 
-    public OperationException(Throwable throwable){
+    public UnknownException(Throwable throwable){
         super(throwable);
     }
 
-    public OperationException(String message, Throwable throwable){
+    public UnknownException(String message, Throwable throwable){
         super(message, throwable);
     }
 
-    public OperationException(String message, Object... args){
+    public UnknownException(String message, Object... args){
         super(String.format(message, args));
     }
 

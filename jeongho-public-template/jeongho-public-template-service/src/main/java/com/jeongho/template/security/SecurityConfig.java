@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -57,15 +58,17 @@ public class SecurityConfig {
          */
 
         http.httpBasic().disable()
-                .cors().and()
+                .cors().disable()
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(new AntPathRequestMatcher(swaggerRequest)
                         , new AntPathRequestMatcher(authApiDocs)
-                        , new AntPathRequestMatcher("/**"))
+                        , new AntPathRequestMatcher(authRequest)
+                )
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
         ;
 
         http.authorizeHttpRequests().requestMatchers(HttpMethod.OPTIONS).permitAll();
@@ -86,6 +89,11 @@ public class SecurityConfig {
 
         return new CustomAccessDeniedHandler();
 //        return accessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new CustomAuthentiHandler();
     }
 
 }

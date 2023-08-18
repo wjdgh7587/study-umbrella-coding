@@ -23,11 +23,11 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         Map<String, Object> payload = new HashMap<>();
         payload.put("timestamp", new Date());
-        payload.put("status", HttpStatus.FORBIDDEN.value());
+        payload.put("status", HttpStatus.BAD_REQUEST.value());
         payload.put("error", "Forbidden");
         payload.put("message", "Access is not allowed");
 
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
