@@ -69,7 +69,7 @@ public class SwaggerTestController {
         // RequestException USER_NOT_FOUND
         if(!param.getTestA().equals(param.getTestB())){
             throw new InternalServerException(BaseResultResCode.RS_5002.getCode(),
-                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.USER_NOT_FOUND.name(), "윤정호"));
+                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), "Testing"));
         }
 
 
