@@ -2,10 +2,7 @@ package com.jeongho.template.exception;
 
 import com.jeongho.template.entity.enums.BaseResultErrorCode;
 import com.jeongho.template.entity.enums.BaseResultResCode;
-import com.jeongho.template.entity.exception.InvalidRequestException;
-import com.jeongho.template.entity.exception.NotFoundException;
-import com.jeongho.template.entity.exception.OperationException;
-import com.jeongho.template.entity.exception.UnknownException;
+import com.jeongho.template.entity.exception.*;
 import com.jeongho.template.entity.form.ExceptionMessage;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,24 +26,78 @@ public class AbstractBaseException {
         this.messageSource = messageSource;
     }
 
+    // TODO : Not Found Exception 먼저
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ExceptionMessage> notFoundException(
             HttpServletRequest request, final Exception exception
-    ){
+    ) {
         log.error("Exception : {}", exception.getMessage());
 
         NotFoundException notFoundException = new NotFoundException(exception.getMessage(), exception);
 
         ExceptionMessage response = new ExceptionMessage(notFoundException);
         response.setCode(BaseResultResCode.RS_4000.getCode());
-        response.setMessage(BaseResultResCode.RS_4000.getKoMsg());
+        response.setMessage(BaseResultResCode.RS_4000.getEnMsg());
+
+        String[] message;
+        String msgKey;
+        String[] params;
+
+        if(!StringUtils.isEmpty(exception.getMessage())){
+
+        }else{
+
+        }
+
         response.setDetail(messageSource.getMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), null, LocaleContextHolder.getLocale()));
 
         return new ResponseEntity<>(response, notFoundException.getHttpStatus());
     }
 
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<ExceptionMessage> internalServerException(
+            HttpServletRequest request, final InternalServerException exception
+    ) {
+        log.error("IntervalServerException : {}", exception.getMessage());
 
-    // 400 error
+        ExceptionMessage response = new ExceptionMessage(exception);
+
+        String code = exception.getCode();
+
+        if (!StringUtils.isEmpty(code)) {
+            response.setCode(BaseResultResCode.get(code).getCode());
+            response.setMessage(BaseResultResCode.get(code).getEnMsg());
+        } else {
+            response.setCode(BaseResultResCode.RS_5002.getCode());
+            response.setMessage(BaseResultResCode.RS_5002.getEnMsg());
+        }
+
+        String[] message = null;
+        String msgKey = null;
+        String[] params = null;
+
+        if (!StringUtils.isEmpty(exception.getMessage())) {
+            message = exception.getMessage().split(":");
+            msgKey = message[0];
+            params = (message.length > 1) ? message[1].split(",") : null;
+
+            if(!StringUtils.isEmpty(msgKey) && BaseResultErrorCode.get(msgKey) != null){
+
+            }else{
+                response.setDetail(messageSource.getMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), null, LocaleContextHolder.getLocale()));
+            }
+
+        } else {
+            response.setDetail(messageSource.getMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), null, LocaleContextHolder.getLocale()));
+        }
+
+        log.error("Response Exception : {}", response);
+
+        return new ResponseEntity<>(response, exception.getHttpStatus());
+    }
+
+
     @ExceptionHandler(OperationException.class)
     public ResponseEntity<ExceptionMessage> operationException(
             HttpServletRequest request, final OperationException exception
@@ -64,7 +115,7 @@ public class AbstractBaseException {
             response.setMessage(BaseResultResCode.get(code).getEnMsg());
         } else {
             response.setCode(BaseResultResCode.RS_4003.getCode());
-            response.setMessage(BaseResultResCode.RS_4003.getKoMsg());
+//            response.setMessage(BaseResultResCode.RS_4003.getKoMsg());
             response.setMessage(BaseResultResCode.RS_4003.getEnMsg());
         }
 
@@ -93,7 +144,6 @@ public class AbstractBaseException {
         return new ResponseEntity<>(response, exception.getHttpStatus());
     }
 
-    // 400 error
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<ExceptionMessage> invalidRequestException(
             HttpServletRequest request, final InvalidRequestException exception
@@ -143,7 +193,7 @@ public class AbstractBaseException {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionMessage> exception(
             HttpServletRequest request, final Exception exception
-    ){
+    ) {
 
         log.error("Exception : {}", exception.getMessage());
 
@@ -152,9 +202,9 @@ public class AbstractBaseException {
         response.setCode(BaseResultResCode.RS_5002.getKoMsg());
         response.setDetail(BaseResultResCode.RS_5002.getKoMsg());
 
-        try{
+        try {
             response.setCode(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name());
-        }catch (NoSuchMessageException e){
+        } catch (NoSuchMessageException e) {
             response.setDetail("No Message Resource");
         }
 
