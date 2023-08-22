@@ -8,13 +8,13 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.util.Arrays;
 
 @Slf4j
 @ControllerAdvice(annotations = RestController.class)
@@ -26,34 +26,50 @@ public class AbstractBaseException {
         this.messageSource = messageSource;
     }
 
-    // TODO : Not Found Exception 먼저
-
-    @ExceptionHandler(NoHandlerFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionMessage> notFoundException(
-            HttpServletRequest request, final Exception exception
+            HttpServletRequest request, final NotFoundException exception
     ) {
-        log.error("Exception : {}", exception.getMessage());
+        log.error("NotFoundException : {}", exception.getMessage());
 
-        NotFoundException notFoundException = new NotFoundException(exception.getMessage(), exception);
+        ExceptionMessage response = new ExceptionMessage(exception);
 
-        ExceptionMessage response = new ExceptionMessage(notFoundException);
-        response.setCode(BaseResultResCode.RS_4000.getCode());
-        response.setMessage(BaseResultResCode.RS_4000.getEnMsg());
-
-        String[] message;
-        String msgKey;
-        String[] params;
-
-        if(!StringUtils.isEmpty(exception.getMessage())){
-
-        }else{
-
+        String code = exception.getCode();
+        if (!StringUtils.isEmpty(code)) {
+            response.setCode(BaseResultResCode.get(code).getCode());
+            response.setMessage(BaseResultResCode.get(code).getEnMsg());
+        } else {
+            response.setCode(BaseResultResCode.RS_4040.getCode());
+            response.setMessage(BaseResultResCode.RS_4040.getEnMsg());
         }
 
-        response.setDetail(messageSource.getMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), null, LocaleContextHolder.getLocale()));
+        String[] message = null;
+        String msgKey = null;
+        String[] params = null;
 
-        return new ResponseEntity<>(response, notFoundException.getHttpStatus());
+
+        // exception.getMessage 존재 여부 판별 -> 없을 경우 아러니이
+        if (!StringUtils.isEmpty(exception.getMessage())) {
+            message = exception.getMessage().split(":");
+            msgKey = message[0];
+            params = (message.length > 1) ? message[1].split(",") : null;
+
+            if (!StringUtils.isEmpty(msgKey) && BaseResultErrorCode.get(msgKey) != null) {
+                response.setDetail(Arrays.toString(params));
+            } else {
+                response.setDetail(messageSource.getMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), null, LocaleContextHolder.getLocale()));
+            }
+
+        } else {
+
+            response.setDetail(messageSource.getMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), null, LocaleContextHolder.getLocale()));
+        }
+
+        log.error("Response Exception : {}", response);
+
+        return new ResponseEntity<>(response, exception.getHttpStatus());
     }
+
 
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ExceptionMessage> internalServerException(
@@ -82,9 +98,9 @@ public class AbstractBaseException {
             msgKey = message[0];
             params = (message.length > 1) ? message[1].split(",") : null;
 
-            if(!StringUtils.isEmpty(msgKey) && BaseResultErrorCode.get(msgKey) != null){
+            if (!StringUtils.isEmpty(msgKey) && BaseResultErrorCode.get(msgKey) != null) {
 
-            }else{
+            } else {
                 response.setDetail(messageSource.getMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), null, LocaleContextHolder.getLocale()));
             }
 
@@ -111,7 +127,6 @@ public class AbstractBaseException {
 
         if (!StringUtils.isEmpty(code)) {
             response.setCode(BaseResultResCode.get(code).getCode());
-            response.setMessage(BaseResultResCode.get(code).getKoMsg());
             response.setMessage(BaseResultResCode.get(code).getEnMsg());
         } else {
             response.setCode(BaseResultResCode.RS_4003.getCode());
@@ -157,11 +172,9 @@ public class AbstractBaseException {
 
         if (!StringUtils.isEmpty(code)) {
             response.setCode(BaseResultResCode.get(code).getCode());
-            response.setMessage(BaseResultResCode.get(code).getKoMsg());
             response.setMessage(BaseResultResCode.get(code).getEnMsg());
         } else {
             response.setCode(BaseResultResCode.RS_4003.getCode());
-            response.setMessage(BaseResultResCode.RS_4003.getKoMsg());
             response.setMessage(BaseResultResCode.RS_4003.getEnMsg());
         }
 
@@ -175,10 +188,9 @@ public class AbstractBaseException {
             params = (message.length > 1) ? message[1].split(",") : null;
 
             if (!StringUtils.isEmpty(msgKey) && BaseResultErrorCode.get(msgKey) != null) {
-                response.setDetail(messageSource.getMessage(BaseResultErrorCode.get("").name(), null, LocaleContextHolder.getLocale()));
-//                response.setDetail(messageSource.getMessage(msgKey, params, LocaleContextHolder.getLocale()));
+                response.setDetail(messageSource.getMessage(msgKey, params, LocaleContextHolder.getLocale()));
             } else {
-                response.setDetail(messageSource.getMessage(BaseResultErrorCode.get(msgKey).name(), null, LocaleContextHolder.getLocale()));
+                response.setDetail(messageSource.getMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), null, LocaleContextHolder.getLocale()));
             }
         } else {
             response.setDetail(messageSource.getMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), null, LocaleContextHolder.getLocale()));
@@ -189,23 +201,23 @@ public class AbstractBaseException {
         return new ResponseEntity<>(response, exception.getHttpStatus());
     }
 
-
+    // Other All Exception
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionMessage> exception(
+    public ResponseEntity<ExceptionMessage> etcException(
             HttpServletRequest request, final Exception exception
     ) {
-
         log.error("Exception : {}", exception.getMessage());
 
         UnknownException unknownException = new UnknownException(exception.getMessage(), exception);
+
         ExceptionMessage response = new ExceptionMessage(unknownException);
-        response.setCode(BaseResultResCode.RS_5002.getKoMsg());
-        response.setDetail(BaseResultResCode.RS_5002.getKoMsg());
+        response.setCode(BaseResultResCode.RS_5002.getCode());
+        response.setMessage(BaseResultResCode.RS_5002.getEnMsg());
 
         try {
-            response.setCode(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name());
-        } catch (NoSuchMessageException e) {
-            response.setDetail("No Message Resource");
+
+        } catch (UnknownException e) {
+            response.setDetail(messageSource.getMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), null, LocaleContextHolder.getLocale()));
         }
 
         log.error("Response Exception : {}", response);
