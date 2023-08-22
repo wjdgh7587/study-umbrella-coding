@@ -3,10 +3,7 @@ package com.jeongho.template.controller;
 import com.jeongho.template.entity.SwaggerTestModelB;
 import com.jeongho.template.entity.enums.BaseResultErrorCode;
 import com.jeongho.template.entity.enums.BaseResultResCode;
-import com.jeongho.template.entity.exception.InternalServerException;
-import com.jeongho.template.entity.exception.InvalidRequestException;
-import com.jeongho.template.entity.exception.NotFoundException;
-import com.jeongho.template.entity.exception.OperationException;
+import com.jeongho.template.entity.exception.*;
 import com.jeongho.template.entity.form.ExceptionMessage;
 import com.jeongho.template.entity.form.ResultMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +41,7 @@ public class SwaggerTestController {
     }
 
     @PostMapping("/test/swaggerB")
-    public ResultMessage testSwaggerB(@RequestBody SwaggerTestModelB param){
+    public ResultMessage testSwaggerB(@RequestBody SwaggerTestModelB param) throws Exception {
 
         log.info("This is Swagger TestB!!");
         log.info("This is Swagger TestB!!");
@@ -67,11 +64,19 @@ public class SwaggerTestController {
 //        }
 
         // RequestException USER_NOT_FOUND
-        if(!param.getTestA().equals(param.getTestB())){
-            throw new InternalServerException(BaseResultResCode.RS_5002.getCode(),
-                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), "Testing"));
-        }
+//        if(!param.getTestA().equals(param.getTestB())){
+//            throw new InternalServerException(BaseResultResCode.RS_5002.getCode(),
+//                    ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.INTERNAL_SERVER_ERROR.name(), "Testing"));
+//        }
 
+        if(!param.getTestA().equals(param.getTestB())) {
+            //1 normal throw
+//            throw new NotFoundException("testst");
+            //2 exception throw
+            throw new NotFoundException(BaseResultResCode.RS_5002.getCode(),
+            ExceptionMessage.makeExceptionMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name(), "test"));
+//            throw new NotFoundException("test");
+        }
 
         else{
             resultMessage.setCode(BaseResultResCode.RS_2001.getCode());
