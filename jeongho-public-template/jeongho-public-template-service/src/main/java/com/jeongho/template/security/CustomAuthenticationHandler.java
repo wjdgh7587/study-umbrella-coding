@@ -7,20 +7,14 @@ import com.jeongho.template.entity.form.ExceptionMessage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CustomAuthentiHandler implements AuthenticationEntryPoint {
+public class CustomAuthenticationHandler implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -32,6 +26,7 @@ public class CustomAuthentiHandler implements AuthenticationEntryPoint {
         payload.setDetail(BaseResultResCode.RS_4040.getEnMsg());
         payload.setMessage(BaseResultErrorCode.BAD_REQUEST_ERROR.name());
 
+        // Normal
 //        Map<String, Object> payload = new HashMap<>();
 //        payload.put("timestamp", new Date());
 //        payload.put("status", HttpStatus.BAD_REQUEST.value());
