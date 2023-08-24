@@ -83,6 +83,7 @@ subprojects{
         implementation files('libs/lucy.jar')
         // Excel POI
         implementation("org.apache.poi:poi:5.2.3")
+        implementation("org.apache.poi:poi-ooxml:5.2.3")
     }
     tasks.named('test') {
         useJUnitPlatform()

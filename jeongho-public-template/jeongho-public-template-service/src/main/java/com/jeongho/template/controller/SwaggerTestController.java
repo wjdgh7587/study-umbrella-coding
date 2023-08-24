@@ -6,15 +6,18 @@ import com.jeongho.template.entity.enums.BaseResultResCode;
 import com.jeongho.template.entity.exception.*;
 import com.jeongho.template.entity.form.ExceptionMessage;
 import com.jeongho.template.entity.form.ResultMessage;
+import com.jeongho.template.entity.params.TestExcel2;
+import com.jeongho.template.utils.ExcelFormatUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,6 +41,31 @@ public class SwaggerTestController {
         resultMap.put("paramB", testParamB);
 
         return resultMap;
+    }
+
+    @GetMapping("/test/excel/export")
+    public void testSwaggerA(HttpServletResponse response) throws IOException {
+
+        log.info("Export excel export");
+
+        Map<String, List<?>> resultMap = new HashMap<>();
+        List<String> headerList = new ArrayList<>();
+        List<TestExcel2> test2 = new ArrayList<>();
+
+        headerList.add("name");
+        headerList.add("gender");
+        headerList.add("age");
+
+        TestExcel2 tt = new TestExcel2();
+        tt.setOrder(2);
+        tt.setName("정호");
+        tt.setGender("Male");
+        test2.add(tt);
+
+        resultMap.put("header", headerList);
+        resultMap.put("body", test2);
+
+        ExcelFormatUtil.exportObjectToExcel(response, resultMap);
     }
 
     @PostMapping("/test/swaggerB")
