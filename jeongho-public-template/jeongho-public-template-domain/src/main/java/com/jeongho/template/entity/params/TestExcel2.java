@@ -8,12 +8,15 @@ import lombok.ToString;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.core.annotation.Order;
 
-@Getter
 @Setter
+@Getter
 @ToString
 public class TestExcel2{
+    @ExcelOrderAnnotation(1)
     private int order;
+    @ExcelOrderAnnotation(2)
     private String name;
+    @ExcelOrderAnnotation(3)
     private String gender;
 
 }
