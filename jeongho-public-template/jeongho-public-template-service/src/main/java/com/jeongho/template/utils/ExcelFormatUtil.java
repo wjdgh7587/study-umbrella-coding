@@ -9,8 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class ExcelFormatUtil {
 
                 T object = (T) bodyParamList.get(i);
 
-                List<Object> getObjectValues = getAllDataFromModel(object);
+                List<Object> getObjectValues = getAllDataOrderFromModel(getAllDataFromModel(object));
 
                 for (int j = 0; j < getObjectValues.size(); j++) {
                     cell = row.createCell(j);
@@ -98,6 +100,23 @@ public class ExcelFormatUtil {
 
         return getterValues;
     }
+
+    public static List<Object> getAllDataOrderFromModel(Object object) {
+
+        List<Object> getterOrderValues = new ArrayList<>();
+
+        Field[] fields = object.getClass().getDeclaredFields();
+
+        List<Field> orderFields = new ArrayList<>();
+        for(Field f : orderFields){
+            if(f.isAnnotationPresent(Order.class)){
+                getterOrderValues.add(f);
+            }
+        }
+
+        return getterOrderValues;
+    }
+
 
     // test
     public static void main(String[] args) {
