@@ -4,20 +4,21 @@ import com.jeongho.template.entity.enums.BaseResultErrorCode;
 import com.jeongho.template.entity.enums.BaseResultResCode;
 import com.jeongho.template.entity.exception.InternalServerException;
 import com.jeongho.template.entity.form.ExceptionMessage;
+import com.jeongho.template.entity.params.ExcelOrderAnnotation;
 import com.jeongho.template.entity.params.TestExcel2;
+import com.jeongho.template.entity.params.TestOrder;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class ExcelFormatUtil {
@@ -61,7 +62,7 @@ public class ExcelFormatUtil {
 
                 T object = (T) bodyParamList.get(i);
 
-                List<Object> getObjectValues = getAllDataOrderFromModel(getAllDataFromModel(object));
+                List<Object> getObjectValues = getAllDataFromModel(null);
 
                 for (int j = 0; j < getObjectValues.size(); j++) {
                     cell = row.createCell(j);
@@ -83,17 +84,34 @@ public class ExcelFormatUtil {
 
     }
 
-    public static List<Object> getAllDataFromModel(Object object) {
+    /**
+     *
+     * SQL -> field 명 yml 순서 보장하게 확실하게 하기
+     *
+     * @param object
+     * @return
+     */
+
+    public static List<Object> getAllDataFromModel(TestOrder object) {
 
         List<Object> getterValues = new ArrayList<>();
 
         try {
             Method[] methods = object.getClass().getDeclaredMethods();
+
+            var list = object.getOrder();
+
+            for(String order : list) {
+                var f = object.getClass().getDeclaredMethod(order);
+                getterValues.add(f.invoke(object));
+            }
+            /*
             for (Method method : methods) {
                 if (method.getName().startsWith("get")) {
                     getterValues.add(method.invoke(object));
                 }
             }
+            */
         } catch (Exception e) {
             throw new InternalServerException(e);
         }
@@ -101,22 +119,23 @@ public class ExcelFormatUtil {
         return getterValues;
     }
 
-    public static List<Object> getAllDataOrderFromModel(Object object) {
+    public static List<Field> getAllDataOrderFromModel(Object object) {
 
-        List<Object> getterOrderValues = new ArrayList<>();
+        List<Field> orderObject = new ArrayList<>();
 
-        Field[] fields = object.getClass().getDeclaredFields();
+        Field[] fields = object.getClass().getFields();
 
-        List<Field> orderFields = new ArrayList<>();
-        for(Field f : orderFields){
-            if(f.isAnnotationPresent(Order.class)){
-                getterOrderValues.add(f);
+        for(Field f : fields){
+            if(f.isAnnotationPresent(ExcelOrderAnnotation.class)){
+                orderObject.add(f);
             }
         }
 
-        return getterOrderValues;
-    }
+        orderObject.sort(Comparator.comparingInt(fi -> fi.getAnnotation(ExcelOrderAnnotation.class).value()));
 
+
+        return orderObject;
+    }
 
     // test
     public static void main(String[] args) {
@@ -125,8 +144,12 @@ public class ExcelFormatUtil {
         List<TestExcel2> listTest = new ArrayList<>();
         TestExcel2 test = new TestExcel2();
 
+        test.setPhone("111111");
         test.setName("정호");
-        test.setOrder(1);
+        test.setOrderr(1);
+        test.setGender("Male");
+        test.setAge(18);
+        test.setAddress("korea");
 
         listTest.add(test);
 
