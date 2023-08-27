@@ -57,7 +57,7 @@ public class SwaggerTestController {
         headerList.add("age");
 
         TestExcel2 tt = new TestExcel2();
-        tt.setOrder(2);
+        tt.setOrderr(2);
         tt.setName("정호");
         tt.setGender("Male");
         test2.add(tt);
