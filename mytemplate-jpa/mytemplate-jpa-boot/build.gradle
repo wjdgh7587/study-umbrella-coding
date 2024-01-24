@@ -1,0 +1,24 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+dependencies {
+    api project(':mytemplate-jpa-service')
+//    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+
+// TODO : spring profile을 gradle에서 관리할 수 있는지 가능성 판별 여부
+// profile 값이 없을 경우 dev 설정 작업 중인 영역
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'dev' : profile
+
+println('Activated profile is : '+ext.profile)
+
+// profile 값에 따른 소스파일 변경 설정
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs "src/main/resources", "src/main/resources-env/${profile}"
+//        }
+//    }
+//}

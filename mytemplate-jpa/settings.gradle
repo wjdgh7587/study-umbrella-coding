@@ -1,0 +1,6 @@
+rootProject.name = 'mytemplate-jpa'
+include 'mytemplate-jpa-boot'
+include 'mytemplate-jpa-service'
+include 'mytemplate-jpa-domain'
+include 'mytemplate-jpa-store'
+
