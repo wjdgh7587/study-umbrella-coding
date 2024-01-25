@@ -56,5 +56,12 @@ subprojects{
 
 }
 
+tasks.register("cleanLogs", Delete){
+    delete 'logs'
+    // delete 'build'
+}
+
+clean.dependsOn "cleanLogs"
+
 
 
