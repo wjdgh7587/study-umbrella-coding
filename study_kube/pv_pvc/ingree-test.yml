@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mysql-ingress
+  namespace: test-dev
+spec:
+  rules:
+    - http:  # 이 부분에서 하이픈이 들어가야 합니다.
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mysql-deployment
+                port:
+                  number: 3306  # MySQL 서비스의 포트
+

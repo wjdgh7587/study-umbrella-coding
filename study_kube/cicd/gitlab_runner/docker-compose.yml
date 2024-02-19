@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'  # CPU를 절반까지만 사용하도록 제한
+          #memory: 512M  # 최대 512MB의 메모리를 사용하도록 제한
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - .mnt/var/:/var/run/docker.sock
+      - .mnt/etc/:/etc/gitlab-runner
+

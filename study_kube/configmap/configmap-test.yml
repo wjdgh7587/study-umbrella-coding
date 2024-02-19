@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: morocco-dev-config
+  namespace: morocco-dev
+data:
+  mariadb_password: TESTS
