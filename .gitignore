@@ -29,10 +29,12 @@ hs_err_pid*
 .vscode/
 
 # gradle
+HELP.md
 .gradle
 /gradle/
 # Cache of project
 .gradletasknamecache
+!gradle/wrapper/gradle-wrapper.jar
 # Eclipse Core
 .project
 # JDT-specific (Eclipse Java Development Tools)
@@ -43,3 +45,4 @@ hs_err_pid*
 # Kotlin
 # Compiled class file
 #*.class
+
